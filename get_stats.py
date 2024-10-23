@@ -14,37 +14,37 @@ import time
 pytesseract.pytesseract.tesseract_cmd = R"C:\Program Files\Tesseract-OCR\tesseract.exe"
 #coords for profile
 
-alliance1 = (1065,380)
-alliance2 = (1400,410)
-alliance_no_server1 = (1000,380)
-alliance_no_server2 = (1400,430)
+alliance1 = (730,255)
+alliance2 = (1065,285)
+alliance_no_server1 = (730,255)
+alliance_no_server2 = (1065,305)
 Server1 = (1320,425)
 Server2 = (1400,460)   
 
 #coords for the stats 
 
-power1 = (450,773)
+power1 = (430,770)
 power2 = (630,810)
 
-merit1 = (450,861)
+merit1 = (430,861)
 merit2 = (630,898)
 
-kills1 = (1316,697)
-kills2 = (1482,725)
+kills1 = (1350,693)
+kills2 = (1500,723)
 
-healed1 = (1316,766)
-healed2 = (1482,794)
+healed1 = (1350,766)
+healed2 = (1500,796)
 
-victories1 = (1350,550)
-victories2 = (1500,580)
+victories1 = (1350,540)
+victories2 = (1500,570)
 
-defeats1 = (1350,590)
-defeats2 = (1500,620)
+defeats1 = (1350,575)
+defeats2 = (1500,605)
 
 dead1 = (1350,730)
 dead2 = (1500,760)
 
-gathered1 = (1250,850)
+gathered1 = (1250,845)
 gathered2 = (1500,880)
 
 
@@ -203,7 +203,6 @@ def main(id):
     
     empty_search()
     return stats
-
 
 
 

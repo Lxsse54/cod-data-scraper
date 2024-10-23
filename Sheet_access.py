@@ -14,8 +14,6 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 SPREADSHEET_ID = "1PK31QXukbD6rdXK70Dbe6GAkpS6jAXB0kj_CD7KWQRA"
 
-
-
 def main(): 
     credentials = None
     if os.path.exists("token.json"):
@@ -71,29 +69,27 @@ def main():
                 dead = stats["dead"]
                 gathered = stats["gathered"]
                 server = stats["server"]
-
-
                 
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{merits_column}{row}", valueInputOption="RAW", body={"values": [[merits]]}).execute()
-                print(f"Updated merits for {id}", merits)
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{power_column}{row}", valueInputOption="RAW", body={"values": [[power]]}).execute()
-                print(f"Updated power for {id}", power)
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{kills_column}{row}", valueInputOption="RAW", body={"values": [[killed]]}).execute()
-                print(f"Updated killed for {id}", killed )
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{healed_column}{row}", valueInputOption="RAW", body={"values": [[healed]]}).execute()
-                print(f"Updated healed for {id}, {healed}")
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{alliance_column}{row}", valueInputOption="RAW", body={"values": [[alliance]]}).execute()
-                print(f"Updated alliance for {id}")
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{server_column}{row}", valueInputOption="RAW", body={"values": [[server]]}).execute()
-                # print(f"Updated server for {id}")
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{victories_column}{row}", valueInputOption="RAW", body={"values": [[victories]]}).execute()
-                print(f"Updated victories for {id}", victories)
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{defeats_column}{row}", valueInputOption="RAW", body={"values": [[defeats]]}).execute()
-                print(f"Updated defeats for {id}", defeats)
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{dead_column}{row}", valueInputOption="RAW", body={"values": [[dead]]}).execute()
-                print(f"Updated dead for {id}", dead)
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{gathered_column}{row}", valueInputOption="RAW", body={"values": [[gathered]]}).execute()
-                print(f"Updated gathered for {id}", gathered)
+                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!C{row}:L{row}", valueInputOption="RAW", body={"values": [[alliance,server,power,merits,victories,defeats,killed,healed,dead,gathered]]}).execute()
+                print(f"Updated stats for {id}", stats)
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{power_column}{row}", valueInputOption="RAW", body={"values": [[power]]}).execute()
+                # print(f"Updated power for {id}", power)
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{kills_column}{row}", valueInputOption="RAW", body={"values": [[killed]]}).execute()
+                # print(f"Updated killed for {id}", killed )
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{healed_column}{row}", valueInputOption="RAW", body={"values": [[healed]]}).execute()
+                # print(f"Updated healed for {id}, {healed}")
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{alliance_column}{row}", valueInputOption="RAW", body={"values": [[alliance]]}).execute()
+                # print(f"Updated alliance for {id}")
+                # # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{server_column}{row}", valueInputOption="RAW", body={"values": [[server]]}).execute()
+                # # print(f"Updated server for {id}")
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{victories_column}{row}", valueInputOption="RAW", body={"values": [[victories]]}).execute()
+                # print(f"Updated victories for {id}", victories)
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{defeats_column}{row}", valueInputOption="RAW", body={"values": [[defeats]]}).execute()
+                # print(f"Updated defeats for {id}", defeats)
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{dead_column}{row}", valueInputOption="RAW", body={"values": [[dead]]}).execute()
+                # print(f"Updated dead for {id}", dead)
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{gathered_column}{row}", valueInputOption="RAW", body={"values": [[gathered]]}).execute()
+                # print(f"Updated gathered for {id}", gathered)
 
 
     except HttpError as error:
@@ -102,4 +98,3 @@ def main():
 
 
 main()
-os.system('shutdown -s')
