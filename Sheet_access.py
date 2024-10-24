@@ -1,6 +1,8 @@
 import os 
 import get_stats
 import random
+import time
+import statistics
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -15,6 +17,8 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 SPREADSHEET_ID = "1PK31QXukbD6rdXK70Dbe6GAkpS6jAXB0kj_CD7KWQRA"
 
 def main(): 
+
+    total_start_time = time.time()
     credentials = None
     if os.path.exists("token.json"):
         credentials = Credentials.from_authorized_user_file("token.json", SCOPES)
@@ -43,10 +47,13 @@ def main():
         healed_column = "J"
         dead_column = "K"
         gathered_column = "L"
+
+        runtimes_list = []
         
         
 
         for row in range (2,600):
+            start_time = time.time()
 
            
             id = sheets.values().get(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{id_column}{row}").execute()
@@ -90,6 +97,18 @@ def main():
                 # print(f"Updated dead for {id}", dead)
                 # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{gathered_column}{row}", valueInputOption="RAW", body={"values": [[gathered]]}).execute()
                 # print(f"Updated gathered for {id}", gathered)
+
+                end_time = time.time()
+                execution_time = end_time - start_time
+                runtimes_list.append(execution_time)
+                print ("Time for this account: " , execution_time, "seconds")
+
+        average_runtime = statistics.mean(runtimes_list) 
+        print("average runtime per account: ", average_runtime)
+        total_end_time = time.time()
+        total_execution_time = total_end_time - total_start_time
+        amount_of_accounts_done = runtimes_list.len()
+        print("Total runtime : ", total_execution_time, ". Acoounts done: ", amount_of_accounts_done)
 
 
     except HttpError as error:

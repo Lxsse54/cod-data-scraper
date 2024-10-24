@@ -9,6 +9,8 @@ import cv2
 import random
 import json
 import time
+import sys
+
 
 
 pytesseract.pytesseract.tesseract_cmd = R"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -16,36 +18,36 @@ pytesseract.pytesseract.tesseract_cmd = R"C:\Program Files\Tesseract-OCR\tessera
 
 alliance1 = (730,255)
 alliance2 = (1065,285)
-alliance_no_server1 = (730,255)
-alliance_no_server2 = (1065,305)
-Server1 = (1320,425)
-Server2 = (1400,460)   
+alliance_no_server1 = [730,270] # to use if server isnt visible 
+alliance_no_server2 = [1165,320]
+Server1 = [1320,425]
+Server2 = [1400,460]   
 
 #coords for the stats 
 
-power1 = (430,770)
-power2 = (630,810)
+power1 = [430,770]
+power2 = [630,810]
 
-merit1 = (430,861)
-merit2 = (630,898)
+merit1 = [430,861]
+merit2 = [630,898]
 
-kills1 = (1350,693)
-kills2 = (1500,723)
+kills1 = [1350,693]
+kills2 = [1500,723]
 
-healed1 = (1350,766)
-healed2 = (1500,796)
+healed1 = [1350,766]
+healed2 = [1500,796]
 
-victories1 = (1350,540)
-victories2 = (1500,570)
+victories1 = [1350,540]
+victories2 = [1500,585]
 
-defeats1 = (1350,575)
-defeats2 = (1500,605)
+defeats1 = [1350,575]
+defeats2 = [1500,615]
 
-dead1 = (1350,730)
-dead2 = (1500,760)
+dead1 = [1350,730]
+dead2 = [1500,760]
 
-gathered1 = (1250,845)
-gathered2 = (1500,880)
+gathered1 = [1250,845]
+gathered2 = [1500,880]
 
 
 
