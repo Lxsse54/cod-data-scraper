@@ -52,7 +52,7 @@ def main():
         
         
 
-        for row in range (2,600):
+        for row in range (2,100):
             start_time = time.time()
 
            
