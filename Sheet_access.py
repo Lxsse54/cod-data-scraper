@@ -52,7 +52,7 @@ def main():
         
         
 
-        for row in range (2,100):
+        for row in range (2,4):
             start_time = time.time()
 
            
@@ -84,7 +84,7 @@ def main():
                 # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{kills_column}{row}", valueInputOption="RAW", body={"values": [[killed]]}).execute()
                 # print(f"Updated killed for {id}", killed )
                 # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{healed_column}{row}", valueInputOption="RAW", body={"values": [[healed]]}).execute()
-                # print(f"Updated healed for {id}, {healed}")
+                # print(f"Updated healed for {id}, {healed}")   
                 # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{alliance_column}{row}", valueInputOption="RAW", body={"values": [[alliance]]}).execute()
                 # print(f"Updated alliance for {id}")
                 # # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{server_column}{row}", valueInputOption="RAW", body={"values": [[server]]}).execute()
@@ -107,8 +107,8 @@ def main():
         print("average runtime per account: ", average_runtime)
         total_end_time = time.time()
         total_execution_time = total_end_time - total_start_time
-        amount_of_accounts_done = runtimes_list.len()
-        print("Total runtime : ", total_execution_time, ". Acoounts done: ", amount_of_accounts_done)
+        amount_of_accounts_done = runtimes_list.__len__()
+        print("Total runtime : ", total_execution_time, ". Accounts done: ", amount_of_accounts_done)
 
 
     except HttpError as error:
@@ -117,3 +117,6 @@ def main():
 
 
 main()
+
+
+os.system('shutdown -s')
