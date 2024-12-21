@@ -16,7 +16,13 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 SPREADSHEET_ID = "1PK31QXukbD6rdXK70Dbe6GAkpS6jAXB0kj_CD7KWQRA"
 
-def main(): 
+amount_of_accounts = 2
+
+
+
+def full_data_scan(amount_of_accounts): 
+    
+    amount_of_accounts = amount_of_accounts + 2
 
     total_start_time = time.time()
     credentials = None
@@ -52,7 +58,7 @@ def main():
         
         
 
-        for row in range (2,4):
+        for row in range (2,amount_of_accounts):
             start_time = time.time()
 
            
@@ -115,8 +121,3 @@ def main():
         print(f"An error occured: {error}")
         
 
-
-main()
-
-
-os.system('shutdown -s')

@@ -57,9 +57,11 @@ gathered2 = [1500,880]
 
 
 def click(x,y):
+    
     win32api.SetCursorPos((x,y))
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
+    time.sleep(0.1)
 
 def resizeWindow():
     try: 
@@ -195,11 +197,12 @@ def main(id):
 
 
         # Specify the file path
-    file_path = rf"C:\Users\linow\iCloudDrive\Cod data scraper\PlayerData\{id}.json"
+    file_path = f'PlayerData/{id}.json'
 
     # Open the file in write mode
     with open(file_path, "w") as file:
         # Write the data to the file
+
         json.dump(stats, file)
         
     
