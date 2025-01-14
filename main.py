@@ -15,7 +15,7 @@ def choice():
         full_data_scan(amount_of_accounts)
     elif choice == "2":
         server = int(input("Enter the server you would like to scan: "))
-        amount_of_accounts = int(input("How many accounts would you like to scan? Sroll down to the first account that is over 15m, and input the number of that accounts ranking in the server "))
+        amount_of_accounts = int(input("How many accounts would you like to scan? Scroll down to the first account that is over 15m, and input the number of that accounts ranking in the server "))
         id_scan(amount_of_accounts, server)
     elif choice == "3":
         exit()

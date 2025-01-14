@@ -14,9 +14,10 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-SPREADSHEET_ID = "1PK31QXukbD6rdXK70Dbe6GAkpS6jAXB0kj_CD7KWQRA"
+SPREADSHEET_ID = "1rJSwd8K-Vc8p1Au66ZexeSw56EvnpWyct25T--l3iBE"
 
 amount_of_accounts = 2
+spreadsheet_name = "Script"
 
 
 
@@ -62,7 +63,7 @@ def full_data_scan(amount_of_accounts):
             start_time = time.time()
 
            
-            id = sheets.values().get(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{id_column}{row}").execute()
+            id = sheets.values().get(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{id_column}{row}").execute()
             id = id.get("values", [])
             if id != []:
                 id = id[0][0]
@@ -83,25 +84,25 @@ def full_data_scan(amount_of_accounts):
                 gathered = stats["gathered"]
                 server = stats["server"]
                 
-                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!C{row}:L{row}", valueInputOption="RAW", body={"values": [[alliance,server,power,merits,victories,defeats,killed,healed,dead,gathered]]}).execute()
+                sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!C{row}:L{row}", valueInputOption="RAW", body={"values": [[alliance,server,power,merits,victories,defeats,killed,healed,dead,gathered]]}).execute()
                 print(f"Updated stats for {id}", stats)
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{power_column}{row}", valueInputOption="RAW", body={"values": [[power]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{power_column}{row}", valueInputOption="RAW", body={"values": [[power]]}).execute()
                 # print(f"Updated power for {id}", power)
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{kills_column}{row}", valueInputOption="RAW", body={"values": [[killed]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{kills_column}{row}", valueInputOption="RAW", body={"values": [[killed]]}).execute()
                 # print(f"Updated killed for {id}", killed )
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{healed_column}{row}", valueInputOption="RAW", body={"values": [[healed]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{healed_column}{row}", valueInputOption="RAW", body={"values": [[healed]]}).execute()
                 # print(f"Updated healed for {id}, {healed}")   
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{alliance_column}{row}", valueInputOption="RAW", body={"values": [[alliance]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{alliance_column}{row}", valueInputOption="RAW", body={"values": [[alliance]]}).execute()
                 # print(f"Updated alliance for {id}")
-                # # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{server_column}{row}", valueInputOption="RAW", body={"values": [[server]]}).execute()
+                # # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{server_column}{row}", valueInputOption="RAW", body={"values": [[server]]}).execute()
                 # # print(f"Updated server for {id}")
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{victories_column}{row}", valueInputOption="RAW", body={"values": [[victories]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{victories_column}{row}", valueInputOption="RAW", body={"values": [[victories]]}).execute()
                 # print(f"Updated victories for {id}", victories)
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{defeats_column}{row}", valueInputOption="RAW", body={"values": [[defeats]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{defeats_column}{row}", valueInputOption="RAW", body={"values": [[defeats]]}).execute()
                 # print(f"Updated defeats for {id}", defeats)
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{dead_column}{row}", valueInputOption="RAW", body={"values": [[dead]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{dead_column}{row}", valueInputOption="RAW", body={"values": [[dead]]}).execute()
                 # print(f"Updated dead for {id}", dead)
-                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"Roster!{gathered_column}{row}", valueInputOption="RAW", body={"values": [[gathered]]}).execute()
+                # sheets.values().update(spreadsheetId=SPREADSHEET_ID, range=f"{spreadsheet_name}!{gathered_column}{row}", valueInputOption="RAW", body={"values": [[gathered]]}).execute()
                 # print(f"Updated gathered for {id}", gathered)
 
                 end_time = time.time()
@@ -115,7 +116,7 @@ def full_data_scan(amount_of_accounts):
         total_execution_time = total_end_time - total_start_time
         amount_of_accounts_done = runtimes_list.__len__()
         print("Total runtime : ", total_execution_time, ". Accounts done: ", amount_of_accounts_done)
-
+        # os.system('shutdown -s')
 
     except HttpError as error:
         print(f"An error occured: {error}")
