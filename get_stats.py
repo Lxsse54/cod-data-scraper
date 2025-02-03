@@ -171,10 +171,10 @@ def main(id):
     if id != 0:
         power = save_stats(power1,power2)
         merits = save_stats(merit1,merit2)
-        healed = save_stats(healed1,healed2)
-        killed = save_stats(kills1,kills2)
         victories = save_stats(victories1,victories2)
         defeats = save_stats(defeats1,defeats2)
+        killed = save_stats(kills1,kills2)
+        healed = save_stats(healed1,healed2)
         dead = save_stats(dead1,dead2)
         gathered = save_stats(gathered1,gathered2)
         
@@ -182,14 +182,14 @@ def main(id):
 
         stats = {
             'id': id,
-            'power': power,
-            'merits': merits,
-            'healed': healed,
-            'killed': killed,
             'alliance': alliance,
             'server': server,
+            'power': power,
+            'merits': merits,
             'victories': victories,
-            'defeats': defeats,
+            'defeats': defeats,#
+            'killed': killed,
+            'healed': healed,
             'dead': dead,
             'gathered': gathered
 
