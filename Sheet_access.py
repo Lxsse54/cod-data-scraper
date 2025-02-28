@@ -22,14 +22,30 @@ amount_of_accounts = 2
 spreadsheet_name = "Script"
 credentials = None
 
+
+
+credentials = None
+if os.path.exists("token.json"):
+    credentials = Credentials.from_authorized_user_file("token.json", SCOPES)
+if not credentials or not credentials.valid:
+    if credentials and credentials.expired and credentials.refresh_token:
+        credentials.refresh(Request())
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+        credentials = flow.run_local_server(port=0)
+    with open("token.json", "w") as token:
+        token.write(credentials.to_json())
+        
 creds = Credentials.from_authorized_user_file("token.json", scopes=SCOPES)
 client = gspread.authorize(creds)
 sheets = client.open_by_key(SPREADSHEET_ID)
 
-
+        
 
 
 def full_data_scan(delay): 
+    # service = build("sheets", "v4", credentials=credentials)
+    # sheets = service.spreadsheets()
         
     
     delay = delay * 60
@@ -106,8 +122,7 @@ def full_data_scan(delay):
     total_execution_time = total_end_time - total_start_time
     amount_of_accounts_done = runtimes_list.__len__()
     print("Total runtime : ", total_execution_time, ". Accounts done: ", amount_of_accounts_done)
-            # os.system('shutdown -s')
+
         
 
     
-        

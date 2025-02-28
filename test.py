@@ -1,94 +1,93 @@
-import os
+import os 
 import get_stats
 import random
 import time
 import statistics
 import gspread
 from datetime import datetime, timezone
-
+import pickle
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import json
 
-# print(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
+
+
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 SPREADSHEET_ID = "1rJSwd8K-Vc8p1Au66ZexeSw56EvnpWyct25T--l3iBE"
 
-amount_of_accounts = 5
-spreadsheet_name = "Script"
+# Path to the service account JSON file
+CREDENTIALS_FILE = "credentials.json"
+TOKEN_FILE = "token.json"
 
-id_column = "A"
+# amount_of_accounts = 2
+# spreadsheet_name = "Script"
+# credentials = None
+
+# creds = Credentials.from_authorized_user_file("token.json", scopes=SCOPES)
+# client = gspread.authorize(creds)
+# sheets = client.open_by_key(SPREADSHEET_ID)
+
+def get_credentials():
+    creds = None
+    
+    # Load credentials if they exist
+    if os.path.exists(TOKEN_FILE):
+        with open(TOKEN_FILE, "r") as token:
+            token_data = json.load(token)
+            creds = Credentials.from_authorized_user_info(token_data, SCOPES)
+    
+    # If credentials are invalid or expired, refresh or request new ones
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
+            
+            # Save new credentials
+            with open(TOKEN_FILE, "w") as token:
+                json.dump({
+                    "token": creds.token,
+                    "refresh_token": creds.refresh_token,
+                    "token_uri": creds.token_uri,
+                    "client_id": creds.client_id,
+                    "client_secret": creds.client_secret,
+                    "scopes": creds.scopes
+                }, token)
+    
+    return creds
+
+def access_google_sheets():
+    creds = get_credentials()
+    client = gspread.authorize(creds)
+    
+    # Example: Open a Google Sheet and read data
+    SPREADSHEET_ID = "your_spreadsheet_id"
+    sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+    
+    # Read values from Sheet1 (A1:D10)
+    values = sheet.get("A1:D10")
+    
+    if not values:
+        print("No data found.")
+    else:
+        for row in values:
+            print(row)
 
 
 
-creds = Credentials.from_authorized_user_file("token.json", scopes=SCOPES)
+
+
+
+
+
+  
+creds = get_credentials()
 client = gspread.authorize(creds)
 sheets = client.open_by_key(SPREADSHEET_ID)
-
-
-ID_list = sheets.worksheet("ID_list")
-#sheets.duplicate_sheet(ID_list.id, new_sheet_name=datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S'))
-
-
-
-stats = {
-    "Alliance": "AllianceName",
-    "Server": "ServerName",
-    "Power": "123456",
-    "Merits": "100",
-    "Victories": "50",
-    "Defeats": "10",
-    "Killed": "200",
-    "Healed": "150",
-    "Dead": "30",
-    "Gathered": "5000"
-}
-
-print(stats)
-
-row = 2
-id_column = "A"
-name_column = "B"
-alliance_column = "C"
-server_column = "D"
-power_column = "E"
-merits_column = "F"
-victories_column = "G"
-defeats_column = "H"
-kills_column = "I"
-healed_column = "J"
-dead_column = "K"
-gathered_column = "L"
-
-values = list(stats.values())
-    
-print(f"{alliance_column}{row}:{gathered_column}{row}")
-sheets.sheet1.update(range_name= f"{alliance_column}{row}:{gathered_column}{row}", values = [values])
-
-
-
-
-
-
-
-#  try:
-#         if not credentials or not credentials.valid:
-#             if credentials and credentials.expired and credentials.refresh_token:
-#                     credentials.refresh(Request())
-#             else:
-#                     flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
-#                     credentials = flow.run_local_server(port=0)
-#             with open("token.json", "w") as token:
-#                     token.write(credentials.to_json())
-#     except:
-#         print("auth error")
-
-#     try: 
-#             service = build("sheets", "v4", credentials=credentials)
-#             sheets = service.spreadsheets()
-#     except HttpError as error:
-#             print(f"An error occured: {error}")
+id_list = sheets.sheet1.col_values(1)
+print(id_list)
