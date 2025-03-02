@@ -1,10 +1,12 @@
 import os 
-import get_stats
+import get_stats_720p
+import get_stats_1080ps
 import random
 import time
 import statistics
 import gspread
 from datetime import datetime, timezone
+resolution = "720p"
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -44,6 +46,8 @@ sheets = client.open_by_key(SPREADSHEET_ID)
 
 
 def full_data_scan(delay): 
+    
+    
     # service = build("sheets", "v4", credentials=credentials)
     # sheets = service.spreadsheets()
         
@@ -84,7 +88,13 @@ def full_data_scan(delay):
                     
                     
                     start_time = time.time()
-                    stats = get_stats.main(id)
+                    
+                    
+                    if resolution == "720p":
+                        stats = get_stats_720p.main(id)
+                    if resolution == "1080p":
+                        stats = get_stats_1080p.main(id)
+                    
                     alliance = stats["alliance"]
                     merits = stats["merits"]
                     power = stats["power"]

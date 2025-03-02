@@ -1,5 +1,5 @@
 import json
-from get_stats import get_stats
+from get_stats_720p import get_stats
 
 # Import the necessary modules
 

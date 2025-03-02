@@ -10,7 +10,7 @@ def choice():
     print("3. Exit")
     choice = input("Enter your choice: ")
     if choice == "1":
-        resizeWindow()
+        
         shutdown = False
         # in how many minutes would you like to start scanning?
         delay = int(input("in how many minutes would you like to start scanning?"))

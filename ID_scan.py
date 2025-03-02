@@ -1,5 +1,5 @@
 import math
-from get_stats import *
+from get_stats_720p import *
 import win32clipboard
 from mouse import release, press, move, is_pressed
 

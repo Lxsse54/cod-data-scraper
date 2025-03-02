@@ -10,6 +10,8 @@ import random
 import json
 import time
 import sys
+import threading 
+import queue
 
 
 
@@ -106,9 +108,9 @@ def find_player(player_id):
     
     
 def  save_alliance():
-
+    output_queue = queue.Queue()
     # alliance = save_stats((alliance1), (alliance2))
-    alliance = save_stats((alliance_no_server1), (alliance_no_server2))
+    alliance = save_stats((alliance_no_server1), (alliance_no_server2), output_queue)
 
     try:
         alliance = alliance.split("]")[0]
@@ -119,11 +121,12 @@ def  save_alliance():
     return alliance
 
 def save_server():
-    server = save_stats(Server1, Server2)
+    output_queue = queue.Queue()
+    server = save_stats(Server1, Server2,output_queue)
     return server
 
 
-def save_stats(top_left, bottom_right):
+def save_stats(top_left, bottom_right,output_queue):
 
 
 
@@ -139,7 +142,7 @@ def save_stats(top_left, bottom_right):
     string = pytesseract.image_to_string(img)
     result = string.replace(",","")
     result = result.strip()
-    
+    output_queue.put(result)
     return result
     
 
@@ -157,7 +160,8 @@ def empty_search():
 
 
 def main(id):
-    
+    resizeWindow()
+    time.sleep(0.1)
     resizeWindow()
     find_player(id)
     time.sleep(0.5)
@@ -169,14 +173,57 @@ def main(id):
     
 
     if id != 0:
-        power = save_stats(power1,power2)
-        merits = save_stats(merit1,merit2)
-        victories = save_stats(victories1,victories2)
-        defeats = save_stats(defeats1,defeats2)
-        killed = save_stats(kills1,kills2)
-        healed = save_stats(healed1,healed2)
-        dead = save_stats(dead1,dead2)
-        gathered = save_stats(gathered1,gathered2)
+        power_queue = queue.Queue()
+
+        powerThread = threading.Thread(target=save_stats, args=(power1,power2, power_queue))
+        powerThread.start()
+
+        merit_queue = queue.Queue()
+
+        meritThread = threading.Thread(target=save_stats, args=(merit1,merit2, merit_queue))
+        meritThread.start()
+
+        victories_queue = queue.Queue()
+        victoriesThread = threading.Thread(target=save_stats, args=(victories1,victories2, victories_queue))
+        victoriesThread.start()
+
+        defeats_queue = queue.Queue()
+        defeatsThread = threading.Thread(target=save_stats, args=(defeats1,defeats2, defeats_queue))
+        defeatsThread.start()
+        
+        killed_queue = queue.Queue()
+        killsThread = threading.Thread(target=save_stats, args=(kills1,kills2, killed_queue))
+        killsThread.start()
+        
+        healed_queue = queue.Queue()
+        healedThread = threading.Thread(target=save_stats, args=(healed1,healed2, healed_queue))
+        healedThread.start()
+        
+        dead_queue = queue.Queue()
+        deadThread = threading.Thread(target=save_stats, args=(dead1,dead2, dead_queue))
+        deadThread.start()
+        
+        
+        gathered_queue = queue.Queue()
+        gatheredThread = threading.Thread(target=save_stats, args=(gathered1,gathered2, gathered_queue))
+        gatheredThread.start()
+        
+        powerThread.join()
+        power = power_queue.get()
+        meritThread.join()
+        merits = merit_queue.get()
+        victoriesThread.join()
+        victories = victories_queue.get()
+        defeatsThread.join()
+        defeats = defeats_queue.get()
+        killsThread.join()
+        killed = killed_queue.get()
+        healedThread.join()
+        healed = healed_queue.get()
+        deadThread.join()
+        dead = dead_queue.get()
+        gatheredThread.join()
+        gathered = gathered_queue.get()
         
 
 
@@ -208,8 +255,6 @@ def main(id):
     
     empty_search()
     return stats
-
-
 
 
 
