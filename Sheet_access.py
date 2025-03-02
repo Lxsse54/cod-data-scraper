@@ -1,6 +1,6 @@
 import os 
 import get_stats_720p
-import get_stats_1080ps
+import get_stats_1080p
 import random
 import time
 import statistics
