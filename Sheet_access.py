@@ -76,6 +76,7 @@ def full_data_scan(delay):
     healed_column = "J"
     dead_column = "K"
     gathered_column = "L"
+    highest_historical_power_column = "M"
 
     runtimes_list = []
 
@@ -105,6 +106,7 @@ def full_data_scan(delay):
                     dead = stats["dead"]
                     gathered = stats["gathered"]
                     server = stats["server"]
+                    highest_historical_power = stats["highest_historical_power"]
                     
                     
                     
@@ -114,7 +116,7 @@ def full_data_scan(delay):
                     stats.pop("id")
                     values = list(stats.values())
                     print (values)
-                    sheets.sheet1.update(range_name= f"{alliance_column}{row}:{gathered_column}{row}", values = [values])
+                    sheets.sheet1.update(range_name= f"{alliance_column}{row}:{highest_historical_power_column}{row}", values = [values])
                     print(f"Updated stats for {id}", stats)
                     
                     

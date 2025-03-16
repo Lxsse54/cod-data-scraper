@@ -51,6 +51,8 @@ dead2 = [980,510]
 gathered1 = [800,560]
 gathered2 = [980,586]
 
+highest_historical_power1 = [840,320]
+highest_historical_power2 = [980,340]
 
 
 
@@ -235,6 +237,7 @@ def main(id):
         healed = save_stats(healed1,healed2,output_queue)
         dead = save_stats(dead1,dead2,output_queue)
         gathered = save_stats(gathered1,gathered2,output_queue)
+        highest_historical_power = save_stats(highest_historical_power1,highest_historical_power2,output_queue) 
         
         
         
@@ -251,7 +254,8 @@ def main(id):
             'killed': killed,
             'healed': healed,
             'dead': dead,
-            'gathered': gathered
+            'gathered': gathered,
+            'highest_historical_power': highest_historical_power
 
         }
         
