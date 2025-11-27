@@ -6,7 +6,7 @@ import time
 import statistics
 import gspread
 from datetime import datetime, timezone
-resolution = "720p"
+resolution = "1080p"
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
